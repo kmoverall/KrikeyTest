@@ -9,10 +9,8 @@ public class Bootstrapper : MonoBehaviour
 
     public ObjectPool PlayerBulletPool;
     public ObjectPool EnemyBulletPool;
-    public ObjectPool InvaderAPool;
-    public ObjectPool InvaderBPool;
-    public ObjectPool InvaderCPool;
-    public ObjectPool UFOPool;
+    public EnemyManager EnemyManager;
+    public WaveController WaveController;
 
     // Set up static references for other scripts
     public void Awake()
@@ -20,6 +18,8 @@ public class Bootstrapper : MonoBehaviour
         CoreController.PlayerInput = PlayerInput;
         CoreController.PlayerBulletPool = PlayerBulletPool;
         CoreController.EnemyBulletPool = EnemyBulletPool;
+        CoreController.EnemyManager = EnemyManager;
+        CoreController.WaveController = WaveController;
     }
 }
 
@@ -29,4 +29,7 @@ public static class CoreController
 
     public static ObjectPool PlayerBulletPool;
     public static ObjectPool EnemyBulletPool;
+
+    public static EnemyManager EnemyManager;
+    public static WaveController WaveController;
 }

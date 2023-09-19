@@ -1,12 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class Enemy : MonoBehaviour
 {
     public bool CanAttack;
-    [System.NonSerialized]
-    public float SpeedMultiplier = 1;
+
+    private float _SpeedMultiplier = 1;
 
     [SerializeField]
     private float _FiringInterval;
@@ -18,15 +19,31 @@ public class Enemy : MonoBehaviour
     private float _AttackTimer;
     private float _GraceTimer;
 
-    private void Start()
+    private Animator _Animator;
+
+    public Action<Enemy> OnDestroy;
+
+    public int Row;
+    public int Column;
+
+    public float SpeedMultiplier 
     {
-        Initalize();
+        get => _SpeedMultiplier;
+        set {
+            _SpeedMultiplier = value;
+            _Animator.speed = _SpeedMultiplier;
+        }
     }
 
-    public void Initalize()
+    public void Initialize(int r, int c)
     {
-        _AttackTimer = Random.Range(0, _FiringInterval);
+        Row = r;
+        Column = c;
+
+        // Randomly stagger attack interval
+        _AttackTimer = UnityEngine.Random.Range(0, _FiringInterval);
         _GraceTimer = _GracePeriod;
+        _Animator = GetComponent<Animator>();
     }
 
     private void Update()
@@ -40,7 +57,7 @@ public class Enemy : MonoBehaviour
 
         if (CanAttack && _AttackTimer <= 0 && _GraceTimer <= 0)
         {
-            _AttackTimer = _FiringInterval;
+            _AttackTimer = _FiringInterval * UnityEngine.Random.Range(0.9f, 1.1f);
             Fire();
         }
     }
@@ -57,6 +74,8 @@ public class Enemy : MonoBehaviour
             gameObject.SetActive(false);
 
             other.GetComponent<Bullet>()?.Hit();
+
+            OnDestroy?.Invoke(this);
         }
     }
 }
