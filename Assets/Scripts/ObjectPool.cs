@@ -7,11 +7,13 @@ public class ObjectPool : MonoBehaviour
     [SerializeField]
     private GameObject _Prefab;
     private List<GameObject> _Pool = new List<GameObject>();
+    [SerializeField]
     private Transform _PoolRoot;
 
     public GameObject Obtain(Vector3 position)
     {
         GameObject newObject = null;
+        // Look for an object in the pool that's already been created
         foreach (var obj in _Pool)
         {
             if (!obj.activeSelf)
@@ -21,6 +23,7 @@ public class ObjectPool : MonoBehaviour
             }
         }
 
+        // Create a new one if none are available
         if (newObject == null)
         {
             newObject = Object.Instantiate(_Prefab, _PoolRoot);
