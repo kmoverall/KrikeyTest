@@ -10,7 +10,7 @@ public class ObjectPool : MonoBehaviour
     [SerializeField]
     private Transform _PoolRoot;
 
-    public GameObject Obtain(Vector3 position)
+    public GameObject Create(Vector3 position)
     {
         GameObject newObject = null;
         // Look for an object in the pool that's already been created

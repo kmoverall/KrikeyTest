@@ -34,6 +34,6 @@ public class PlayerShip : MonoBehaviour
 
     private void Fire(InputAction.CallbackContext context)
     {
-        Debug.Log("Fire!");
+        CoreController.PlayerBulletPool.Create(transform.position);
     }
 }

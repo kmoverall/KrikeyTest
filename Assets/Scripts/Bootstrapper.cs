@@ -7,7 +7,8 @@ public class Bootstrapper : MonoBehaviour
 {
     public PlayerInput PlayerInput;
 
-    public ObjectPool BulletPool;
+    public ObjectPool PlayerBulletPool;
+    public ObjectPool EnemyBulletPool;
     public ObjectPool InvaderAPool;
     public ObjectPool InvaderBPool;
     public ObjectPool InvaderCPool;
@@ -17,11 +18,8 @@ public class Bootstrapper : MonoBehaviour
     public void Awake()
     {
         CoreController.PlayerInput = PlayerInput;
-        CoreController.BulletPool = BulletPool;
-        CoreController.InvaderAPool = InvaderAPool;
-        CoreController.InvaderBPool = InvaderBPool;
-        CoreController.InvaderCPool = InvaderCPool;
-        CoreController.UFOPool = UFOPool;
+        CoreController.PlayerBulletPool = PlayerBulletPool;
+        CoreController.EnemyBulletPool = EnemyBulletPool;
     }
 }
 
@@ -29,9 +27,6 @@ public static class CoreController
 {
     public static PlayerInput PlayerInput;
 
-    public static ObjectPool BulletPool;
-    public static ObjectPool InvaderAPool;
-    public static ObjectPool InvaderBPool;
-    public static ObjectPool InvaderCPool;
-    public static ObjectPool UFOPool;
+    public static ObjectPool PlayerBulletPool;
+    public static ObjectPool EnemyBulletPool;
 }
