@@ -40,12 +40,14 @@ public class MainMenu : MonoBehaviour
 
         _HighScoreText.text = CoreController.ScoreManager.HighScore.ToString();
         Time.timeScale = 0;
+        CoreController.PlayerInput.SwitchCurrentActionMap("UI");
     }
 
     public void Close()
     {
         gameObject.SetActive(false);
         Time.timeScale = 1;
+        CoreController.PlayerInput.SwitchCurrentActionMap("Player");
     }
 
     private void OnStartButton()
