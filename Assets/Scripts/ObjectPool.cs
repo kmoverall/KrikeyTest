@@ -40,4 +40,12 @@ public class ObjectPool : MonoBehaviour
     {
         toReturn.SetActive(false);
     }
+
+    public void ReturnAll()
+    {
+        foreach(var obj in _Pool)
+        {
+            obj.SetActive(false);
+        }
+    }
 }

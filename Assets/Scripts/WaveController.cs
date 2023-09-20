@@ -2,12 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using System;
 
 
 // Contains logic about enemy group behavior
 public class WaveController : MonoBehaviour
 {
-    public List<List<Enemy>> Enemies;
+    private List<List<Enemy>> _Enemies;
 
     [SerializeField]
     private float _InitialSpeed;
@@ -24,7 +25,12 @@ public class WaveController : MonoBehaviour
     [SerializeField]
     private float _StepdownDistance;
 
+    [SerializeField]
+    private float _YLimit;
+
     private bool _MovingRight = true;
+
+    public Action OnYLimitHit; 
 
     // Gets the position of the furthest enemies still alive
     private Bounds EnemyBounds {
@@ -34,18 +40,18 @@ public class WaveController : MonoBehaviour
             Bounds result = new Bounds();
             IEnumerable<Enemy> check;
 
-            for (int i = 0; i < Enemies[0].Count; i++)
+            for (int i = 0; i < _Enemies[0].Count; i++)
             {
-                check = Enemies.Select(r => r[i]);
+                check = _Enemies.Select(r => r[i]);
                 if (check.Any(e => e.gameObject.activeSelf))
                 {
                     max.x = check.First().transform.localPosition.x;
                     break;
                 }
             }
-            for (int i = Enemies[0].Count-1; i >=0; i--)
+            for (int i = _Enemies[0].Count-1; i >=0; i--)
             {
-                check = Enemies.Select(r => r[i]);
+                check = _Enemies.Select(r => r[i]);
                 if (check.Any(e => e.gameObject.activeSelf))
                 {
                     min.x = check.First().transform.localPosition.x;
@@ -53,11 +59,11 @@ public class WaveController : MonoBehaviour
                 }
             }
 
-            var top = Enemies.First(e => e.Any(e => e.gameObject.activeSelf));
-            max.y = top.First().transform.localPosition.y;
+            var top = _Enemies.FirstOrDefault(e => e.Any(e => e.gameObject.activeSelf));
+            max.y = top?.FirstOrDefault()?.transform.localPosition.y ?? 0;
 
-            var bottom = Enemies.Last(e => e.Any(e => e.gameObject.activeSelf));
-            min.y = bottom.First().transform.localPosition.y;
+            var bottom = _Enemies.LastOrDefault(e => e.Any(e => e.gameObject.activeSelf));
+            min.y = bottom?.FirstOrDefault()?.transform.localPosition.y ?? 0;
 
             result.min = min;
             result.max = max;
@@ -65,17 +71,31 @@ public class WaveController : MonoBehaviour
         }
     }
 
-    public void Initialize()
+    public void Reset()
     {
-        foreach (var row in Enemies)
+        _SpeedMultiplier = 1;
+
+        _Enemies = null;
+        enabled = false;
+
+        var position = transform.position;
+        position.y = 0;
+        transform.position = position;
+    }
+
+    public void Initialize(List<List<Enemy>> enemies)
+    {
+        _Enemies = enemies;
+        foreach (var row in _Enemies)
         {
             foreach (var enemy in row)
             {
-                enemy.OnDestroy = OnDestroy;
+                enemy.OnDestroyed = OnDestroy;
             }
         }
 
-        Enemies.Last().ForEach(e => e.CanAttack = true);
+        _Enemies.Last().ForEach(e => e.CanAttack = true);
+        enabled = true;
     }
 
     private void Update()
@@ -103,15 +123,27 @@ public class WaveController : MonoBehaviour
         }
 
         transform.position = position;
+
+        if (position.y + bounds.min.y <= _YLimit)
+        {
+            OnYLimitHit?.Invoke();
+        }
+    }
+
+    public void Stop()
+    {
+        enabled = false;
+        _Enemies = null;
     }
 
     private void OnDestroy(Enemy target)
     {
-        if (target.Column > 0)
+        if (target.Row > 0)
         {
-            Enemies[target.Row-1][target.Column].CanAttack = true;
+            _Enemies[target.Row-1][target.Column].CanAttack = true;
         }
         _SpeedMultiplier += _SpeedPerKill;
-        Enemies.ForEach(r => r.ForEach(e => e.SpeedMultiplier = _SpeedMultiplier));
+        _Enemies.ForEach(r => r.ForEach(e => e.SpeedMultiplier = _SpeedMultiplier));
+        CoreController.EnemyManager.OnEnemyDestroyed();
     }
 }

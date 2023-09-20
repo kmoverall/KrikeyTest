@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class EnemyManager : MonoBehaviour
 {
@@ -42,14 +43,21 @@ public class EnemyManager : MonoBehaviour
     private Coroutine _UFORoutine;
     private GameObject _UFO;
 
-    private void Start()
-    {
-        SpawnWave();
-    }
+    private int _DestroyCount = 0;
+
+    public bool AllDestroyed => _DestroyCount == _RowCount * _ColumnCount;
+
+    public Action OnAllDestroyed;
 
     public void SpawnWave()
     {
+        _DestroyCount = 0;
         _Enemies = new List<List<Enemy>>();
+
+        StartRow = Mathf.Clamp(StartRow, 0, 3);
+
+        CoreController.WaveController.Reset();
+
         for (int r = 0; r < _RowCount; r++)
         {
             _Enemies.Add(new List<Enemy>());
@@ -74,14 +82,16 @@ public class EnemyManager : MonoBehaviour
             }
         }
 
-        CoreController.WaveController.Enemies = _Enemies;
-        CoreController.WaveController.Initialize();
+        CoreController.WaveController.Initialize(_Enemies);
 
         _UFORoutine = StartCoroutine(UFOSpawnRoutine());
     }
 
     public void ClearEnemies()
     {
+        if (_Enemies == null)
+            return;
+
         for (int r = 0; r < _RowCount; r++)
         {
             for (int c = 0; c < _ColumnCount; c++)
@@ -108,6 +118,16 @@ public class EnemyManager : MonoBehaviour
             position.y = _UpperLeftSpawnPos.y + _Spacing.y;
             position.x = _UFOStartX;
             _UFO.transform.position = position;
+        }
+    }
+
+    public void OnEnemyDestroyed()
+    {
+        _DestroyCount++;
+        if (AllDestroyed)
+        {
+            CoreController.WaveController.Stop();
+            OnAllDestroyed.Invoke();
         }
     }
 }

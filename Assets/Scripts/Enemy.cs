@@ -21,7 +21,7 @@ public class Enemy : MonoBehaviour
 
     private Animator _Animator;
 
-    public Action<Enemy> OnDestroy;
+    public Action<Enemy> OnDestroyed;
 
     [SerializeField]
     private float _PointValue;
@@ -60,10 +60,14 @@ public class Enemy : MonoBehaviour
 
         _AttackTimer -= Time.deltaTime * SpeedMultiplier;
 
-        if (CanAttack && _AttackTimer <= 0 && _GraceTimer <= 0)
+        if (_AttackTimer <= 0)
         {
-            _AttackTimer = _FiringInterval * UnityEngine.Random.Range(0.9f, 1.1f);
-            Fire();
+            _AttackTimer = _FiringInterval * UnityEngine.Random.Range(1f, 1.1f);
+
+            if (_GraceTimer <= 0 && CanAttack)
+            {
+                Fire();
+            }
         }
     }
 
@@ -80,7 +84,7 @@ public class Enemy : MonoBehaviour
 
             other.GetComponent<Bullet>()?.Hit();
 
-            OnDestroy?.Invoke(this);
+            OnDestroyed?.Invoke(this);
         }
     }
 }

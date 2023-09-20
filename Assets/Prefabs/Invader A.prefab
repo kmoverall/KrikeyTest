@@ -91,8 +91,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CanAttack: 0
-  _FiringInterval: 25
+  _FiringInterval: 30
   _GracePeriod: 1
+  _PointValue: 0
 --- !u!54 &3622531038325070214
 Rigidbody:
   m_ObjectHideFlags: 0

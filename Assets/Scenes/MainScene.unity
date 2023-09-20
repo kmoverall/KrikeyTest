@@ -511,6 +511,7 @@ GameObject:
   - component: {fileID: 349782795}
   - component: {fileID: 349782798}
   - component: {fileID: 349782796}
+  - component: {fileID: 349782799}
   m_Layer: 0
   m_Name: CoreController
   m_TagString: Untagged
@@ -578,10 +579,27 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PlayerInput: {fileID: 349782796}
+  Player: {fileID: 1905814490}
   PlayerBulletPool: {fileID: 1919676111}
   EnemyBulletPool: {fileID: 1261497815}
   EnemyManager: {fileID: 1390313963}
   WaveController: {fileID: 1005297140}
+  GameManager: {fileID: 349782799}
+--- !u!114 &349782799
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 349782794}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59fbb9359c9676b4a85ded7a9c343a4e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _StartingLives: 2
+  _TransitionPause: 2
+  _DeathPause: 1
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
@@ -1009,9 +1027,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _InitialSpeed: 0.5
   _SpeedMultiplier: 1
-  _SpeedPerKill: 0.15
+  _SpeedPerKill: 0.18
   _XLimit: 12
   _StepdownDistance: 0.5
+  _YLimit: 2
 --- !u!1 &1191045817
 GameObject:
   m_ObjectHideFlags: 0
@@ -1627,6 +1646,17 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1701323950}
   m_CullTransparentMesh: 1
+--- !u!114 &1905814490 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2575689413199802997, guid: 7a37cd592be4b844a95d09c1e921bfaf, type: 3}
+  m_PrefabInstance: {fileID: 5634630657834519270}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f7584cd49e178a48b71a78d2209b2ef, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1914858004
 GameObject:
   m_ObjectHideFlags: 0

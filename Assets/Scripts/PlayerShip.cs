@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using System;
 
 public class PlayerShip : MonoBehaviour
 {
@@ -12,6 +13,10 @@ public class PlayerShip : MonoBehaviour
     private float MovementLimit;
     [SerializeField]
     private float MovementSpeed;
+
+    public int LifeCount;
+
+    public Action OnDestroy;
 
 
     private void Start()
@@ -35,5 +40,22 @@ public class PlayerShip : MonoBehaviour
     private void Fire(InputAction.CallbackContext context)
     {
         CoreController.PlayerBulletPool.Create(transform.position);
+    }
+
+    public void Reset()
+    {
+        var position = transform.position;
+        position.x = 0;
+        transform.position = position;
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (gameObject.activeSelf && other.gameObject.activeSelf)
+        {
+            other.GetComponent<Bullet>()?.Hit();
+            LifeCount -= 1;
+            OnDestroy?.Invoke();
+        }
     }
 }
