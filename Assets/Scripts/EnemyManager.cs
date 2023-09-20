@@ -30,6 +30,18 @@ public class EnemyManager : MonoBehaviour
 
     public int StartRow = 0;
 
+    [SerializeField]
+    private GameObject _UFOPrefab;
+
+    [SerializeField]
+    private float _UFOSpawnFrequency;
+
+    [SerializeField]
+    private float _UFOStartX;
+
+    private Coroutine _UFORoutine;
+    private GameObject _UFO;
+
     private void Start()
     {
         SpawnWave();
@@ -64,5 +76,38 @@ public class EnemyManager : MonoBehaviour
 
         CoreController.WaveController.Enemies = _Enemies;
         CoreController.WaveController.Initialize();
+
+        _UFORoutine = StartCoroutine(UFOSpawnRoutine());
+    }
+
+    public void ClearEnemies()
+    {
+        for (int r = 0; r < _RowCount; r++)
+        {
+            for (int c = 0; c < _ColumnCount; c++)
+            {
+                Destroy(_Enemies[r][c].gameObject);
+            }
+        }
+
+        _Enemies = null;
+
+        StopCoroutine(_UFORoutine);
+        Destroy(_UFO);
+        _UFO = null;
+    }
+
+    private IEnumerator UFOSpawnRoutine()
+    {
+        while (true)
+        {
+            yield return new WaitForSeconds(_UFOSpawnFrequency);
+            _UFO = Instantiate(_UFOPrefab, transform);
+
+            var position = _UFO.transform.position;
+            position.y = _UpperLeftSpawnPos.y + _Spacing.y;
+            position.x = _UFOStartX;
+            _UFO.transform.position = position;
+        }
     }
 }

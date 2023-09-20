@@ -95,7 +95,7 @@ GameObject:
   - component: {fileID: 4811147317066039856}
   - component: {fileID: 7841798687741217896}
   - component: {fileID: -499634836080011956}
-  - component: {fileID: -5057320023607734292}
+  - component: {fileID: 265965095337802017}
   m_Layer: 7
   m_Name: UFO
   m_TagString: Untagged
@@ -117,7 +117,7 @@ Transform:
   m_Children:
   - {fileID: 7725843004132479233}
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!65 &4811147317066039856
 BoxCollider:
@@ -188,7 +188,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &-5057320023607734292
+--- !u!114 &265965095337802017
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -197,12 +197,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 2160414776495464242}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 66519bab14a7d164bb65fb653084287f, type: 3}
+  m_Script: {fileID: 11500000, guid: dc4394f065656b94391ed4bcef6ba53d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   CanAttack: 0
-  _FiringInterval: 10000
-  _GracePeriod: 10000
+  _FiringInterval: 1000000
+  _GracePeriod: 1000000
+  _PointValue: 0
+  _Speed: -9
+  _XLimit: 24
 --- !u!1 &6952543988795607995
 GameObject:
   m_ObjectHideFlags: 0

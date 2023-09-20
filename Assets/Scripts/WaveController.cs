@@ -90,7 +90,6 @@ public class WaveController : MonoBehaviour
 
         if (position.x + bounds.max.x > _XLimit)
         {
-            Debug.Log("Hit Max");
             position.x = _XLimit - bounds.max.x;
             position.y -= _StepdownDistance;
             _MovingRight = !_MovingRight;
@@ -98,7 +97,6 @@ public class WaveController : MonoBehaviour
 
         if (position.x + bounds.min.x < -1 * _XLimit)
         {
-            Debug.Log("Hit Min");
             position.x = -1 * _XLimit - bounds.min.x;
             position.y -= _StepdownDistance;
             _MovingRight = !_MovingRight;

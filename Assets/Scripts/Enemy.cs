@@ -23,7 +23,12 @@ public class Enemy : MonoBehaviour
 
     public Action<Enemy> OnDestroy;
 
+    [SerializeField]
+    private float _PointValue;
+
+    [System.NonSerialized]
     public int Row;
+    [System.NonSerialized]
     public int Column;
 
     public float SpeedMultiplier 
@@ -46,7 +51,7 @@ public class Enemy : MonoBehaviour
         _Animator = GetComponent<Animator>();
     }
 
-    private void Update()
+    protected virtual void Update()
     {
         if (_GraceTimer > 0)
         {
