@@ -30,6 +30,8 @@ public class Bootstrapper : MonoBehaviour
         CoreController.ScoreManager = ScoreManager;
         CoreController.Player = Player;
         CoreController.UIManager = UIManager;
+
+        UIManager.MainMenu.Open(false, false);
     }
 }
 

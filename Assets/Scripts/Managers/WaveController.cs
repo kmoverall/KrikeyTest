@@ -95,11 +95,16 @@ public class WaveController : MonoBehaviour
         }
 
         _Enemies.Last().ForEach(e => e.CanAttack = true);
+        _MovingRight = true;
         enabled = true;
     }
 
     private void Update()
     {
+        // Do not update if paused
+        if (Time.timeScale == 0)
+            return;
+
         var sign = _MovingRight ? -1 : 1;
 
         var position = transform.position;

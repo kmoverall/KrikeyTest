@@ -12,12 +12,16 @@ public class HUD : MonoBehaviour
     private TMP_Text _LevelText;
     [SerializeField]
     private TMP_Text _LivesText;
-     
+    [SerializeField]
+    private Button _MenuButton;
+
     private void Start()
     {
         _ScoreText.text = "";
         _LevelText.text = "";
         _LivesText.text = "";
+
+        _MenuButton.onClick.AddListener(OnMenuButton);
 
         enabled = false;
     }
@@ -34,5 +38,10 @@ public class HUD : MonoBehaviour
         var lives = CoreController.Player.LifeCount;
         lives = Mathf.Clamp(lives, 0, int.MaxValue);
         _LivesText.text = lives.ToString();
+    }
+
+    private void OnMenuButton()
+    {
+        CoreController.UIManager.MainMenu.Open(true);
     }
 }

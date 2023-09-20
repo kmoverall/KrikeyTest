@@ -18,8 +18,7 @@ public class GameManager : MonoBehaviour
         CoreController.Player.OnDestroy += PlayerDeath;
         CoreController.EnemyManager.OnAllDestroyed += CompleteLevel;
         CoreController.WaveController.OnYLimitHit += InstantGameOver;
-
-        StartGame();
+        CoreController.WaveController.Stop();
     }
 
     public void StartGame()
@@ -33,13 +32,13 @@ public class GameManager : MonoBehaviour
     private void StartLevel(int level)
     {
         Level = level;
+        CoreController.Player.gameObject.SetActive(true);
         CoreController.Player.Reset();
         CoreController.PlayerBulletPool.ReturnAll();
         CoreController.EnemyBulletPool.ReturnAll();
         CoreController.EnemyManager.ClearEnemies();
         CoreController.EnemyManager.StartRow = Level - 1;
         CoreController.EnemyManager.SpawnWave();
-        Time.timeScale = 1f;
     }
 
     private void CompleteLevel() => StartCoroutine(LevelTransition());
@@ -49,6 +48,7 @@ public class GameManager : MonoBehaviour
         Time.timeScale = 0;
         yield return new WaitForSecondsRealtime(_TransitionPause);
         StartLevel(Level + 1);
+        Time.timeScale = 1;
     }
 
     private void PlayerDeath() => StartCoroutine(PlayerDeathRoutine());
@@ -79,5 +79,6 @@ public class GameManager : MonoBehaviour
     {
         CoreController.UIManager.HUD.StopUpdating();
         CoreController.ScoreManager.UpdateHighScore();
+        CoreController.UIManager.MainMenu.Open(false, true);
     }
 }
