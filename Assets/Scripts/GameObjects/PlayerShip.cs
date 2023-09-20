@@ -39,7 +39,9 @@ public class PlayerShip : MonoBehaviour
 
     private void Fire(InputAction.CallbackContext context)
     {
-        CoreController.PlayerBulletPool.Create(transform.position);
+        // Prevent firing while paused
+        if (Time.timeScale > 0)
+            CoreController.PlayerBulletPool.Create(transform.position);
     }
 
     public void Reset()

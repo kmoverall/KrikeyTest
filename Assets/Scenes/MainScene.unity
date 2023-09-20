@@ -587,6 +587,7 @@ MonoBehaviour:
   WaveController: {fileID: 1005297140}
   GameManager: {fileID: 349782799}
   ScoreManager: {fileID: 349782800}
+  UIManager: {fileID: 1914858009}
 --- !u!114 &349782799
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -717,6 +718,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 874942477}
+  - component: {fileID: 874942478}
   m_Layer: 5
   m_Name: HUD
   m_TagString: Untagged
@@ -747,6 +749,21 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &874942478
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 874942476}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 99bc256a0727a8c43b5dceb3b78f6689, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _ScoreText: {fileID: 1701323953}
+  _LevelText: {fileID: 910605208}
+  _LivesText: {fileID: 1225039222}
 --- !u!1 &910605205
 GameObject:
   m_ObjectHideFlags: 0
@@ -1683,6 +1700,7 @@ GameObject:
   - component: {fileID: 1914858007}
   - component: {fileID: 1914858006}
   - component: {fileID: 1914858005}
+  - component: {fileID: 1914858009}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -1774,6 +1792,19 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &1914858009
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1914858004}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1f0a42cee335fd34fb8a0f3e0fffe8d9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  HUD: {fileID: 874942478}
 --- !u!1 &1919676110
 GameObject:
   m_ObjectHideFlags: 0
