@@ -90,7 +90,7 @@ public class WaveController : MonoBehaviour
         {
             foreach (var enemy in row)
             {
-                enemy.OnDestroyed = OnDestroy;
+                enemy.OnDestroyed = OnEnemyDestroyed;
             }
         }
 
@@ -136,7 +136,7 @@ public class WaveController : MonoBehaviour
         _Enemies = null;
     }
 
-    private void OnDestroy(Enemy target)
+    private void OnEnemyDestroyed(Enemy target)
     {
         if (target.Row > 0)
         {

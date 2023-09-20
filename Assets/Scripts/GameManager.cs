@@ -25,6 +25,7 @@ public class GameManager : MonoBehaviour
     public void StartGame()
     {
         CoreController.Player.LifeCount = _StartingLives;
+        CoreController.ScoreManager.Reset();
         StartLevel(1);
     }
 
@@ -75,6 +76,6 @@ public class GameManager : MonoBehaviour
 
     private void GameOver()
     {
-        
+        CoreController.ScoreManager.UpdateHighScore();
     }
 }

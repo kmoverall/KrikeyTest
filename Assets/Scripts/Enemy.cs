@@ -24,7 +24,7 @@ public class Enemy : MonoBehaviour
     public Action<Enemy> OnDestroyed;
 
     [SerializeField]
-    private float _PointValue;
+    private int _PointValue;
 
     [System.NonSerialized]
     public int Row;
@@ -84,6 +84,7 @@ public class Enemy : MonoBehaviour
 
             other.GetComponent<Bullet>()?.Hit();
 
+            CoreController.ScoreManager.GainPoints(_PointValue);
             OnDestroyed?.Invoke(this);
         }
     }

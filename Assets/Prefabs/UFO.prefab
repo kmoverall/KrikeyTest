@@ -203,7 +203,7 @@ MonoBehaviour:
   CanAttack: 0
   _FiringInterval: 1000000
   _GracePeriod: 1000000
-  _PointValue: 0
+  _PointValue: 100
   _Speed: -9
   _XLimit: 24
 --- !u!1 &6952543988795607995

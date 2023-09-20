@@ -15,6 +15,7 @@ public class Bootstrapper : MonoBehaviour
     public WaveController WaveController;
 
     public GameManager GameManager;
+    public ScoreManager ScoreManager;
 
     // Set up static references for other scripts
     public void Awake()
@@ -25,6 +26,7 @@ public class Bootstrapper : MonoBehaviour
         CoreController.EnemyManager = EnemyManager;
         CoreController.WaveController = WaveController;
         CoreController.GameManager = GameManager;
+        CoreController.ScoreManager = ScoreManager;
         CoreController.Player = Player;
     }
 }
@@ -41,4 +43,5 @@ public static class CoreController
     public static WaveController WaveController;
 
     public static GameManager GameManager;
+    public static ScoreManager ScoreManager;
 }
